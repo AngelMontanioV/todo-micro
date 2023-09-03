@@ -5,7 +5,6 @@ import { useState } from "react";
 import CheckBox from './CheckBox';
 
 const ItemTodo = ({ todoObject }) => {
-  console.log(todoObject)
   const { todo, id, checked } = todoObject
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -18,7 +17,6 @@ const ItemTodo = ({ todoObject }) => {
     <div className="bg-primary mt-2 h-11 rounded-md text-white flex items-center pl-2 pr-3">
       <CheckBox
         checked = {checked}
-        onClick = {()=> console.log(id)}
       />
       <div className='ml-2 flex-shrink-0'>{todo}</div>
       <div className='ml-auto'>

@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         primary: '#222222', // Agrega un color personalizado llamado "primary"do
+        backCcontainer : '#1c1c1c'
       },
       backgroundImage: () => ({
         "sahara": "url('./assets/saharaSky.jpg')",

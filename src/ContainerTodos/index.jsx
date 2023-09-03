@@ -20,6 +20,7 @@ const exampleTodosArray = [
 
 
 const ContainerTodos = () => {
+  console.log("container Todo")
   return (
     <div>
       {

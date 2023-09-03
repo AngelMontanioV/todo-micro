@@ -1,26 +1,42 @@
+import PropTypes from 'prop-types';
 import { useState } from "react";
+import tw, { styled, css } from "twin.macro";
+
+// Components imports
 import BoxOptions from "./BoxOptions";
 import ItemThemeOption from "./ItemThemeOption";
-import autoExportImages from "../assets/autoExportImages";
-import tw, { styled } from "twin.macro";
-const Header = () => {
+import themes from '../assets/themes';
+
+
+// Styles
+const StyledHeaderContainer = styled.div`${tw`text-white mb-5 relative`}`
+const StyledIconBurguer = styled.div`${tw`md:hidden ml-1 text-lg`}`
+const StyledWrapperIconHome = styled.div(({textColor})=>[
+  textColor && css`
+    color: ${textColor};`
+])
+
+
+// Component
+const Header = ({ setActualTheme, textColor }) => {
   const [isOpenBoxOptions, setIsOpenBoxOptions] = useState(false)
 
   const handleMenuOptions = () => {
     setIsOpenBoxOptions(prev => !prev)
   }
 
-  const StyledHeaderContainer = styled.div`${tw`text-white mb-5 relative`}`
-  const StyledIconBurguer = styled.div`${tw`md:hidden ml-1 text-lg`}`
+  const handleChangeTheme = (theme)=>{
+    setActualTheme(theme)
+  }
 
   return (
     <StyledHeaderContainer>
       <StyledIconBurguer><i className="fa-solid fa-bars"></i></StyledIconBurguer>
       <div className="flex justify-between text-2xl font-bold">
-        <div>
+        <StyledWrapperIconHome textColor={textColor}>
           <i className="fa-solid fa-house-chimney"></i>
           <span className="ml-4">Tareas</span>
-        </div>
+        </StyledWrapperIconHome>
 
         <div
           onClick={handleMenuOptions}
@@ -31,7 +47,11 @@ const Header = () => {
       {
         isOpenBoxOptions &&
         <BoxOptions>
-          {autoExportImages.map(image => <ItemThemeOption key={image} image={image} />)}
+          {themes.map(theme =>
+            <div key={theme.id}  onClick={()=>handleChangeTheme(theme)}>
+              <ItemThemeOption theme={theme} />
+            </div>
+          )}
         </BoxOptions>
       }
     </StyledHeaderContainer>
@@ -39,3 +59,8 @@ const Header = () => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  setActualTheme: PropTypes.func,
+  textColor:  PropTypes.string
+}
