@@ -1,42 +1,54 @@
+import { useState } from "react";
 import { ItemTodo } from "./ItemTodo"
-
-const exampleTodosArray = [
-  {
-    id: 1,
-    todo: "Este es un TODO",
-    cheked: false,
-    isImportant : "false",
-    dataCreated: "01-07-2012"
-  },
-  {
-    id: 2,
-    todo: "Este es un TODO 2 ",
-    cheked: false,
-    isImportant : "false",
-    dataCreated: "01-07-2012"
-  },
-  {
-    id: 3,
-    todo: "Este es un TODO 3",
-    cheked: false,
-    isImportant : "false",
-    dataCreated: "01-07-2012"
-  },
-]
+import PropTypes from 'prop-types';
 
 
-const ContainerTodos = () => {
-  console.log("container Todo")
+import tw, { styled } from "twin.macro";
+
+const StylesTodosContainer = styled.div`
+  ${tw`overflow-y-auto rounded-md scrollbar-none  max-h-[calc(100%-90px)] grow`}
+`;
+
+
+
+const ContainerTodos = ({ todos, dispatch }) => {
+
+
+  const [todosCompletedVisible, setTodosCompletedVisible] = useState(false)
+
   return (
-    <div>
+    <StylesTodosContainer
+    >
       {
-        exampleTodosArray.map((todo, key) => (
-          <ItemTodo todoObject={todo} key={key} />
-        ))
+        todos.map((todo, key) => {
+          if (!todo.done) {
+            return <ItemTodo todoObject={todo} key={key} dispatch={dispatch} />
+          }
+        })
       }
-    </div>
+      <div
+        onClick={() => setTodosCompletedVisible(prev => !prev)}
+        className="flex items-center justify-between opacity-80 text-white w-32 rounded-md mt-3 pl-2 pr-2 h-8 bg-primary cursor-pointer">Completado
+        {!todosCompletedVisible ? <i className="fa-solid fa-chevron-down"></i> : <i className="fa-solid fa-chevron-up"></i>}
+
+      </div>
+      {
+        todosCompletedVisible && todos.map((todo, key) => {
+          if (todo.done) {
+            return <ItemTodo todoObject={todo} key={key} dispatch={dispatch} />
+          }
+        })
+      }
+    </StylesTodosContainer>
+
+
+
   );
 };
 
 export default ContainerTodos;
 
+ContainerTodos.propTypes = {
+  todos: PropTypes.array,
+  dispatch: PropTypes.func
+}
