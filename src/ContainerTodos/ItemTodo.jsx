@@ -3,9 +3,9 @@ import tw, { styled } from "twin.macro";
 //Componentes
 import CheckBox from './CheckBox';
 
-const StyledTextTodoContainer = styled.div(({ done }) => [
+const StyledTextTodoContainer = styled.div(({ hecho }) => [
   tw`ml-2 flex-shrink-0`,
-  done && tw`text-gray-300 line-through`,
+  hecho == "true" && tw`text-gray-300 line-through`,
 ])
 
 
@@ -33,7 +33,7 @@ const ItemTodo = ({ todoObject, dispatch }) => {
         checked={done}
         onClick={() => handleDoneTask(id)}
       />
-      <StyledTextTodoContainer done={done}>{todo}</StyledTextTodoContainer>
+      <StyledTextTodoContainer hecho={done ? "true" : "false"}>{todo}</StyledTextTodoContainer>
       <div className='ml-auto'>
         <label className="inline-flex items-center cursor-pointer ">
           {/* <input type="checkbox" className="hidden" onChange={(e) => handleStartFavorite(e)} /> */}
@@ -64,4 +64,8 @@ export { ItemTodo };
 ItemTodo.propTypes = {
   todoObject: PropTypes.object,
   dispatch: PropTypes.func
+}
+
+StyledTextTodoContainer.propTypes = {
+  hecho : PropTypes.string
 }

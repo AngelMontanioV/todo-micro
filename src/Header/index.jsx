@@ -27,6 +27,7 @@ const Header = ({ setActualTheme, textcolor }) => {
 
   const handleChangeTheme = (theme)=>{
     setActualTheme(theme)
+    setIsOpenBoxOptions(false)
   }
 
   return (
